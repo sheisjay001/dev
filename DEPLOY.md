@@ -23,7 +23,7 @@ To deploy this successfully to Vercel, you need to deploy them as **two separate
 ## Step 2: Deploy the Backend (API)
 
 1.  Go to Vercel Dashboard -> **Add New** -> **Project**.
-2.  Select your GitHub repository.
+2.  Select your GitHub repository (`sheisjay001/dev`).
 3.  **Important**: In "Root Directory", click `Edit` and select `api`.
 4.  Open **Environment Variables**:
     *   `DB_HOST`: Your cloud database host.
