@@ -7,6 +7,8 @@ export const pool = mysql.createPool({
   user: DB_USER || 'root',
   password: DB_PASSWORD || '',
   database: DB_NAME || 'crm_dev',
+  port: process.env.DB_PORT || 3306,
+  ssl: process.env.DB_SSL === 'true' ? { rejectUnauthorized: true } : undefined,
   waitForConnections: true,
   connectionLimit: 10,
   queueLimit: 0
