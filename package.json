@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "install": "cd api && npm install",
+    "install": "cd api && npm install && cd ../web && npm install --legacy-peer-deps",
     "build": "node build.js"
   },
   "engines": {

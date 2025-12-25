@@ -19,11 +19,6 @@ function run(command, cwd) {
   }
 }
 
-// 1. Install Web Dependencies
-console.log('\n📦 Installing web dependencies...');
-// Use --legacy-peer-deps to avoid potential conflicts
-run('npm install --legacy-peer-deps', webDir);
-
 // 2. Build Web App
 console.log('\n🏗️ Building web app...');
 run('npm run build', webDir);
