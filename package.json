@@ -2,12 +2,9 @@
   "name": "crm-monorepo",
   "version": "1.0.0",
   "private": true,
-  "workspaces": [
-    "api",
-    "web"
-  ],
   "scripts": {
-    "build": "npm run build --workspace=crm-web && mkdir -p public && cp -r web/dist/* public/"
+    "install": "cd api && npm install",
+    "build": "node build.js"
   },
   "engines": {
     "node": "18.x"
