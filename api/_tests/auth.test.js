@@ -27,11 +27,11 @@ async function resetDb() {
 beforeAll(async () => {
   process.env.DB_NAME = dbName
   await resetDb()
-  app = (await import('../src/app.js')).default
+  app = (await import('../_src/app.js')).default
 })
 
 afterAll(async () => {
-  const { pool } = await import('../src/db.js')
+  const { pool } = await import('../_src/db.js')
   await pool.end()
 })
 

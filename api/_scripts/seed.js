@@ -1,5 +1,5 @@
 import 'dotenv/config'
-import { pool } from '../src/db.js'
+import { pool } from '../_src/db.js'
 
 async function run() {
   const [users] = await pool.query('SELECT id FROM users LIMIT 1')

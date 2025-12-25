@@ -28,7 +28,7 @@ async function resetDb() {
 beforeAll(async () => {
   process.env.DB_NAME = dbName
   await resetDb()
-  app = (await import('../src/app.js')).default
+  app = (await import('../_src/app.js')).default
   const email = 'cuser@example.com'
   const password = 'password'
   await request(app).post('/auth/register').send({ email, password, name: 'U' })
@@ -59,6 +59,6 @@ test('reject invalid contact', async () => {
 })
 
 afterAll(async () => {
-  const { pool } = await import('../src/db.js')
+  const { pool } = await import('../_src/db.js')
   await pool.end()
 })
