@@ -4,7 +4,7 @@ import { isEmail, isNonEmpty, isPhone, isPositiveNumber } from './lib/validate.j
 import { createClient } from './lib/apiClient.js'
 import FieldError from './components/FieldError.jsx'
 
-const API = import.meta.env.VITE_API_URL || 'http://localhost:4000'
+const API = import.meta.env.VITE_API_URL || '/api'
 
 function Login({ onAuthed, client }) {
   const [email, setEmail] = useState('')
