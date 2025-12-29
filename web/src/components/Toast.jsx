@@ -13,9 +13,9 @@ export function ToastProvider({ children }) {
   return (
     <ToastCtx.Provider value={value}>
       {children}
-      <div className="fixed top-3 right-3 space-y-2 z-50">
+      <div className="fixed top-3 right-3 space-y-2 z-50 flex flex-col items-end pointer-events-none">
         {items.map(t => (
-          <div key={t.id} className={`px-4 py-3 rounded-lg shadow-lg text-white font-medium text-sm animate-in slide-in-from-right-5 fade-in duration-300 ${t.type==='error'?'bg-red-500':t.type==='success'?'bg-brand-600':'bg-gray-800'}`}>
+          <div key={t.id} className={`pointer-events-auto px-4 py-3 rounded-lg shadow-lg text-white font-medium text-sm animate-in slide-in-from-right-5 fade-in duration-300 max-w-[calc(100vw-24px)] md:max-w-sm break-words ${t.type==='error'?'bg-red-500':t.type==='success'?'bg-brand-600':'bg-gray-800'}`}>
             {t.text}
           </div>
         ))}

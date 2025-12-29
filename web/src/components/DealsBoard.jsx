@@ -199,22 +199,22 @@ export default function DealsBoard({ token, client }) {
     <div className="space-y-6 h-[calc(100vh-200px)] flex flex-col">
       {/* Header & Add Form */}
       <div className="bg-white/80 backdrop-blur p-4 rounded-2xl shadow-sm border border-white/50 flex-none">
-        <div className="flex flex-wrap gap-3 items-end">
-          <div className="flex-1 min-w-[200px]">
+        <div className="flex flex-col md:flex-row gap-3 items-end">
+          <div className="w-full md:flex-1">
             <label className="text-xs font-medium text-gray-500 ml-1">Title</label>
             <input className="w-full bg-white border border-gray-200 rounded-lg px-3 py-2 text-sm outline-none focus:border-brand-500 focus:ring-2 focus:ring-brand-200" placeholder="New Deal Title" value={title} onChange={e=>setTitle(e.target.value)} />
           </div>
-          <div className="w-32">
+          <div className="w-full md:w-32">
             <label className="text-xs font-medium text-gray-500 ml-1">Amount</label>
             <input className="w-full bg-white border border-gray-200 rounded-lg px-3 py-2 text-sm outline-none focus:border-brand-500 focus:ring-2 focus:ring-brand-200" placeholder="0.00" value={amount} onChange={e=>setAmount(e.target.value)} />
           </div>
-          <div className="w-32">
+          <div className="w-full md:w-32">
              <label className="text-xs font-medium text-gray-500 ml-1">Stage</label>
              <select className="w-full bg-white border border-gray-200 rounded-lg px-3 py-2 text-sm outline-none focus:border-brand-500 focus:ring-2 focus:ring-brand-200" value={stage} onChange={e=>setStage(e.target.value)}>
                 {STAGES.map(s => <option key={s} value={s}>{STAGE_LABELS[s]}</option>)}
              </select>
           </div>
-          <button className="bg-brand-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-brand-700 disabled:opacity-50 disabled:cursor-not-allowed" onClick={add} disabled={loading || !title}>
+          <button className="w-full md:w-auto bg-brand-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-brand-700 disabled:opacity-50 disabled:cursor-not-allowed" onClick={add} disabled={loading || !title}>
             Add Deal
           </button>
         </div>

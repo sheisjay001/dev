@@ -102,8 +102,8 @@ export default function Login({ onAuthed, client }) {
       </div>
 
       {/* Right Side - Login Form */}
-      <div className="w-full lg:w-1/2 flex items-center justify-center p-8 bg-gray-50">
-        <form onSubmit={submit} className="w-full max-w-sm bg-white p-8 rounded-2xl shadow-xl border border-gray-100 space-y-6">
+      <div className="w-full lg:w-1/2 flex items-center justify-center p-4 md:p-8 bg-gray-50">
+        <form onSubmit={submit} className="w-full max-w-sm bg-white p-6 md:p-8 rounded-2xl shadow-xl border border-gray-100 space-y-6">
           <div className="text-center space-y-2">
             <div className="lg:hidden w-12 h-12 bg-brand-100 text-brand-600 rounded-xl flex items-center justify-center mx-auto text-2xl font-bold">C</div>
             <h1 className="text-2xl font-bold text-gray-900">Welcome back</h1>

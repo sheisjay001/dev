@@ -32,18 +32,18 @@ export default function Dashboard({ token, client, setTab }) {
   return (
     <div className="max-w-7xl mx-auto space-y-8">
       {/* Hero Section */}
-      <div className="bg-gradient-to-br from-brand-600 to-brand-700 rounded-3xl p-8 text-white shadow-xl relative overflow-hidden">
+      <div className="bg-gradient-to-br from-brand-600 to-brand-700 rounded-3xl p-6 md:p-8 text-white shadow-xl relative overflow-hidden">
         <div className="relative z-10">
-          <h1 className="text-4xl font-extrabold mb-3 tracking-tight">Welcome to Your Dashboard</h1>
-          <p className="text-brand-100 text-lg max-w-2xl font-medium">
+          <h1 className="text-2xl md:text-4xl font-extrabold mb-3 tracking-tight">Welcome to Your Dashboard</h1>
+          <p className="text-brand-100 text-base md:text-lg max-w-2xl font-medium">
             Here's what's happening in your CRM today. You have <span className="font-bold text-white">{stats.deals} active deals</span> and <span className="font-bold text-white">{stats.contacts} contacts</span>.
           </p>
-          <div className="mt-8 flex gap-3">
-             <button onClick={()=>setTab('deals')} className="bg-white text-brand-700 px-6 py-2.5 rounded-xl font-bold shadow-lg hover:shadow-xl transition-all active:scale-95 flex items-center gap-2">
+          <div className="mt-8 flex flex-col md:flex-row gap-3">
+             <button onClick={()=>setTab('deals')} className="bg-white text-brand-700 px-6 py-2.5 rounded-xl font-bold shadow-lg hover:shadow-xl transition-all active:scale-95 flex items-center justify-center gap-2">
                <span>View Pipeline</span>
                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 7l5 5m0 0l-5 5m5-5H6" /></svg>
              </button>
-             <button onClick={()=>setTab('contacts')} className="bg-brand-500/30 backdrop-blur border border-white/20 text-white px-6 py-2.5 rounded-xl font-bold hover:bg-brand-500/40 transition-all active:scale-95">
+             <button onClick={()=>setTab('contacts')} className="bg-brand-500/30 backdrop-blur border border-white/20 text-white px-6 py-2.5 rounded-xl font-bold hover:bg-brand-500/40 transition-all active:scale-95 text-center">
                Manage Contacts
              </button>
           </div>
