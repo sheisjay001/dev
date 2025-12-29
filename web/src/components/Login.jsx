@@ -59,7 +59,7 @@ export default function Login({ onAuthed, client }) {
       {/* Left Side - Hero / Marketing */}
       <div className="hidden lg:flex lg:w-1/2 bg-brand-600 text-white p-12 flex-col justify-between relative overflow-hidden">
         <div className="relative z-10">
-          <div className="w-12 h-12 bg-white/10 backdrop-blur rounded-xl flex items-center justify-center text-2xl font-bold mb-8">C</div>
+          <img src="/logo.svg" className="w-16 h-16 mb-8 shadow-2xl rounded-2xl hover:scale-105 transition-transform duration-500" alt="CRM Logo" />
           <h1 className="text-6xl font-extrabold mb-6 leading-tight tracking-tight">The World's Best CRM Platform</h1>
           <p className="text-xl text-brand-100 max-w-md leading-relaxed font-medium">
             Manage relationships, track deals, and close more sales with our intuitive, powerful, and beautiful interface.

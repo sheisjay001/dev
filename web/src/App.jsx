@@ -26,7 +26,7 @@ export default function App() {
       <header className="bg-white/80 backdrop-blur sticky top-0 z-30 border-b border-gray-100 shadow-sm flex-none">
         <div className="max-w-7xl mx-auto px-4 h-16 flex items-center justify-between">
           <div className="flex items-center gap-2 cursor-pointer" onClick={()=>setTab('dashboard')}>
-            <div className="w-8 h-8 bg-brand-600 rounded-lg flex items-center justify-center text-white font-bold">C</div>
+            <img src="/logo.svg" className="w-8 h-8 shadow-sm hover:scale-105 transition-transform" alt="CRM Logo" />
             <span className="font-bold text-gray-900 tracking-tight">CRM</span>
           </div>
           <div className="flex items-center gap-4">
