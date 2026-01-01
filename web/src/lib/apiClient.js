@@ -1,4 +1,4 @@
-export function createClient({ baseUrl, getToken, toast }) {
+export function createClient({ baseUrl, getToken, toast, onUnauthorized }) {
   async function request(path, { method = 'GET', headers = {}, body, signal } = {}) {
     const token = getToken?.()
     const h = { 'Content-Type': 'application/json', ...headers }
@@ -11,6 +11,12 @@ export function createClient({ baseUrl, getToken, toast }) {
         signal
       })
       const data = await res.json().catch(() => ({}))
+      
+      if (res.status === 401) {
+        onUnauthorized?.()
+        throw new Error('Session expired')
+      }
+
       if (!res.ok) {
         toast?.('' + (data.error || 'Request failed'), 'error')
         const err = new Error(data.error || `HTTP ${res.status}`)
@@ -19,6 +25,7 @@ export function createClient({ baseUrl, getToken, toast }) {
       }
       return data
     } catch (e) {
+      if (e.message === 'Session expired') throw e
       if (!e.status) toast?.('Network error', 'error')
       throw e
     }

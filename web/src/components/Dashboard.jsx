@@ -39,7 +39,7 @@ export default function Dashboard({ token, client, setTab }) {
             Here's what's happening in your CRM today. You have <span className="font-bold text-white">{stats.deals} active deals</span> and <span className="font-bold text-white">{stats.contacts} contacts</span>.
           </p>
           <div className="mt-8 flex flex-col md:flex-row gap-3">
-             <button onClick={()=>setTab('deals')} className="bg-white text-brand-700 px-6 py-2.5 rounded-xl font-bold shadow-lg hover:shadow-xl transition-all active:scale-95 flex items-center justify-center gap-2">
+             <button onClick={()=>setTab('deals')} className="bg-white text-accent-700 px-6 py-2.5 rounded-xl font-bold shadow-lg hover:shadow-xl transition-all active:scale-95 flex items-center justify-center gap-2">
                <span>View Pipeline</span>
                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 7l5 5m0 0l-5 5m5-5H6" /></svg>
              </button>

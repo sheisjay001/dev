@@ -85,13 +85,33 @@ export default function Contacts({ token, client }) {
               <input className={`w-full bg-white border border-gray-200 rounded-lg px-3 py-2 text-sm outline-none focus:border-brand-500 focus:ring-2 focus:ring-brand-200 transition-all ${phoneInvalid?'border-red-500 focus:ring-red-200':''}`} placeholder="Phone" value={phone} onChange={e=>setPhone(e.target.value)} />
               <FieldError show={phoneInvalid}>Invalid phone</FieldError>
             </div>
-            <button className={`w-full md:w-auto md:col-span-2 rounded-lg px-3 py-2 text-sm font-medium transition-all ${loading || !(nameValid && emailValid2 && phoneValid) ? 'bg-gray-200 text-gray-400 cursor-not-allowed' : 'bg-brand-600 text-white hover:bg-brand-700 shadow-sm hover:shadow active:scale-95'}`} onClick={add} disabled={loading || !(nameValid && emailValid2 && phoneValid)}>Add Contact</button>
+            <button className={`w-full md:w-auto md:col-span-2 rounded-lg px-3 py-2 text-sm font-medium transition-all ${loading || !(nameValid && emailValid2 && phoneValid) ? 'bg-gray-200 text-gray-400 cursor-not-allowed' : 'bg-accent-600 text-white hover:bg-accent-700 shadow-sm hover:shadow active:scale-95'}`} onClick={add} disabled={loading || !(nameValid && emailValid2 && phoneValid)}>Add Contact</button>
           </div>
         </div>
 
-        <div className="space-y-2">
+        <motion.div 
+          className="space-y-2"
+          initial="hidden"
+          animate="show"
+          variants={{
+            hidden: { opacity: 0 },
+            show: {
+              opacity: 1,
+              transition: {
+                staggerChildren: 0.05
+              }
+            }
+          }}
+        >
           {items.map(c => (
-            <div key={c.id} className="group flex items-center justify-between p-3 rounded-xl hover:bg-brand-50/50 border border-transparent hover:border-brand-100 transition-all">
+            <motion.div 
+              key={c.id} 
+              variants={{
+                hidden: { opacity: 0, y: 10 },
+                show: { opacity: 1, y: 0 }
+              }}
+              className="group flex items-center justify-between p-3 rounded-xl hover:bg-brand-50/50 border border-transparent hover:border-brand-100 transition-all"
+            >
               <div className="flex items-center gap-3 min-w-0">
                 <div className="w-10 h-10 rounded-full bg-brand-100 text-brand-700 flex items-center justify-center font-bold text-sm flex-shrink-0">
                   {c.name.charAt(0).toUpperCase()}
@@ -105,10 +125,10 @@ export default function Contacts({ token, client }) {
                   </div>
                 </div>
               </div>
-            </div>
+            </motion.div>
           ))}
           {items.length === 0 && <div className="text-center py-10 text-gray-400">No contacts found</div>}
-        </div>
+        </motion.div>
 
         <div className="flex items-center justify-between mt-6 pt-4 border-t border-gray-100">
           <button className={`px-4 py-2 rounded-lg text-sm font-medium transition-all ${page<=1 || loading ? 'text-gray-300 cursor-not-allowed' : 'text-gray-600 hover:bg-gray-100 hover:text-gray-900'}`} disabled={page<=1 || loading} onClick={()=>goto(page-1)}>Prev</button>

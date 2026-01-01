@@ -13,7 +13,16 @@ export default function App() {
   const [healthy, setHealthy] = useState('checking...')
   const [tab, setTab] = useState('dashboard')
   const toast = useToast()
-  const client = createClient({ baseUrl: API, getToken: () => token, toast: (t, type) => toast.push(t, type) })
+  const client = createClient({ 
+    baseUrl: API, 
+    getToken: () => token, 
+    toast: (t, type) => toast.push(t, type),
+    onUnauthorized: () => {
+      setToken(null)
+      localStorage.removeItem('token')
+      toast.push('Session expired. Please login again.', 'error')
+    }
+  })
 
   useEffect(() => {
     fetch(`${API}/health`).then(r=>r.json()).then(()=>setHealthy('ok')).catch(()=>setHealthy('offline'))
@@ -43,10 +52,24 @@ export default function App() {
 
       <div className="flex-1 overflow-y-auto">
         <div className="max-w-7xl mx-auto px-4 py-6 h-full">
-          <main className="animate-in fade-in slide-in-from-bottom-4 duration-500 h-full">
-            {tab==='dashboard' && <Dashboard token={token} client={client} setTab={setTab} />}
-            {tab==='contacts' && <Contacts token={token} client={client} />}
-            {tab==='deals' && <DealsBoard token={token} client={client} />}
+          <main className="h-full">
+            <AnimatePresence mode="wait">
+              {tab==='dashboard' && (
+                <motion.div key="dashboard" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }} transition={{ duration: 0.2 }}>
+                  <Dashboard token={token} client={client} setTab={setTab} />
+                </motion.div>
+              )}
+              {tab==='contacts' && (
+                <motion.div key="contacts" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }} transition={{ duration: 0.2 }}>
+                  <Contacts token={token} client={client} />
+                </motion.div>
+              )}
+              {tab==='deals' && (
+                <motion.div key="deals" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }} transition={{ duration: 0.2 }}>
+                  <DealsBoard token={token} client={client} />
+                </motion.div>
+              )}
+            </AnimatePresence>
           </main>
         </div>
       </div>
