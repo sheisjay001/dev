@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react'
+import { motion, AnimatePresence } from 'framer-motion'
 import { useToast } from './components/Toast.jsx'
 import { createClient } from './lib/apiClient.js'
+import { CommandPalette } from './components/CommandPalette.jsx'
 import Login from './components/Login.jsx'
 import Contacts from './components/Contacts.jsx'
 import DealsBoard from './components/DealsBoard.jsx'
@@ -73,6 +75,7 @@ export default function App() {
           </main>
         </div>
       </div>
+      <CommandPalette setTab={setTab} onLogout={() => { setToken(null); localStorage.removeItem('token') }} />
     </div>
   )
 }
