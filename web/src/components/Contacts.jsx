@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import { motion } from 'framer-motion'
 import { useToast } from './Toast.jsx'
 import { isEmail, isNonEmpty, isPhone } from '../lib/validate.js'
 import FieldError from './FieldError.jsx'
