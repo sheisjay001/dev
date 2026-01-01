@@ -75,6 +75,9 @@ export default function App() {
           </main>
         </div>
       </div>
+      <div className="text-center text-xs text-gray-400 py-2">
+        v1.0.1
+      </div>
       <CommandPalette setTab={setTab} onLogout={() => { setToken(null); localStorage.removeItem('token') }} />
     </div>
   )
