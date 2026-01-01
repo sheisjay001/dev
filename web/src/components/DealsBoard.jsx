@@ -35,7 +35,9 @@ const STAGE_COLORS = {
   lost: 'bg-red-50 text-red-700 border-red-200'
 }
 
-function SortableItem({ id, deal }) {
+import { DealModal } from './DealModal.jsx'
+
+function SortableItem({ id, deal, onClick }) {
   const {
     attributes,
     listeners,
@@ -52,16 +54,23 @@ function SortableItem({ id, deal }) {
   }
 
   return (
-    <div ref={setNodeRef} style={style} {...attributes} {...listeners} className="bg-white p-3 rounded-lg border border-gray-200 shadow-sm hover:shadow-md transition-all cursor-grab active:cursor-grabbing mb-2 group">
+    <div 
+      ref={setNodeRef} 
+      style={style} 
+      {...attributes} 
+      {...listeners} 
+      onClick={() => onClick(deal)}
+      className="bg-white p-3 rounded-lg border border-gray-200 shadow-sm hover:shadow-md transition-all cursor-grab active:cursor-grabbing mb-2 group relative"
+    >
       <div className="flex justify-between items-start mb-1">
         <h4 className="font-bold text-gray-900 text-sm line-clamp-2">{deal.title}</h4>
       </div>
-      <div className="text-xs font-mono text-gray-500">₦{Number(deal.amount).toLocaleString()}</div>
+      <div className="text-xs font-mono text-gray-500">₦{Number(deal.amount || deal.value).toLocaleString()}</div>
     </div>
   )
 }
 
-function DroppableColumn({ id, items, total }) {
+function DroppableColumn({ id, items, total, onDealClick }) {
   const { setNodeRef } = useSortable({ id, data: { type: 'container' } })
 
   return (
@@ -73,7 +82,7 @@ function DroppableColumn({ id, items, total }) {
       <div ref={setNodeRef} className="p-2 flex-1 overflow-y-auto min-h-[150px]">
         <SortableContext items={items.map(d => d.id)} strategy={verticalListSortingStrategy}>
           {items.map(deal => (
-            <SortableItem key={deal.id} id={deal.id} deal={deal} />
+            <SortableItem key={deal.id} id={deal.id} deal={deal} onClick={onDealClick} />
           ))}
         </SortableContext>
         {items.length === 0 && (
@@ -95,6 +104,7 @@ export default function DealsBoard({ token, client }) {
   const [title, setTitle] = useState('')
   const [amount, setAmount] = useState('')
   const [stage, setStage] = useState('new')
+  const [selectedDeal, setSelectedDeal] = useState(null)
   const toast = useToast()
 
   const sensors = useSensors(
@@ -105,7 +115,9 @@ export default function DealsBoard({ token, client }) {
   const dealsByStage = useMemo(() => {
     const grouped = { new: [], qualified: [], won: [], lost: [] }
     items.forEach(d => {
-      if (grouped[d.stage]) grouped[d.stage].push(d)
+      // Ensure compatibility with old 'amount' and new 'value' fields if mixed
+      const deal = { ...d, value: d.value || d.amount }
+      if (grouped[d.stage]) grouped[d.stage].push(deal)
     })
     return grouped
   }, [items])
@@ -113,7 +125,7 @@ export default function DealsBoard({ token, client }) {
   const totalsByStage = useMemo(() => {
     const totals = { new: 0, qualified: 0, won: 0, lost: 0 }
     items.forEach(d => {
-      if (totals[d.stage] !== undefined) totals[d.stage] += Number(d.amount)
+      if (totals[d.stage] !== undefined) totals[d.stage] += Number(d.amount || d.value || 0)
     })
     return totals
   }, [items])
@@ -125,6 +137,18 @@ export default function DealsBoard({ token, client }) {
     } catch (err) {
       console.error(err)
     }
+  }
+
+  async function handleUpdateDeal(id, updates) {
+    await client.patch(`/deals/${id}`, updates)
+    toast.push('Deal updated', 'success')
+    await load()
+  }
+
+  async function handleDeleteDeal(id) {
+    await client.delete(`/deals/${id}`)
+    toast.push('Deal deleted', 'success')
+    await load()
   }
 
   useEffect(() => { load() }, [])
@@ -235,6 +259,7 @@ export default function DealsBoard({ token, client }) {
                 id={stage} 
                 items={dealsByStage[stage]} 
                 total={totalsByStage[stage]}
+                onDealClick={setSelectedDeal}
               />
             ))}
           </div>
@@ -243,12 +268,21 @@ export default function DealsBoard({ token, client }) {
             {activeDeal ? (
               <div className="bg-white p-3 rounded-lg border border-brand-200 shadow-xl rotate-2 w-[250px]">
                 <h4 className="font-medium text-gray-900 text-sm">{activeDeal.title}</h4>
-                <div className="text-xs font-mono text-gray-500">₦{Number(activeDeal.amount).toLocaleString()}</div>
+                <div className="text-xs font-mono text-gray-500">₦{Number(activeDeal.amount || activeDeal.value).toLocaleString()}</div>
               </div>
             ) : null}
           </DragOverlay>
         </DndContext>
       </div>
+
+      <DealModal
+        deal={selectedDeal}
+        isOpen={!!selectedDeal}
+        onClose={() => setSelectedDeal(null)}
+        onUpdate={handleUpdateDeal}
+        onDelete={handleDeleteDeal}
+        stages={STAGES.map(s => ({ id: s, label: STAGE_LABELS[s] }))}
+      />
     </div>
   )
 }
